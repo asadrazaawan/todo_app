@@ -16,6 +16,17 @@ class TodoRepository{
       return todoEntity.createFromObject(todoID);
     }
 
+    /**
+     * 
+     * @param {PaginationOptions} pagOpts 
+     * @returns 
+     */
+    
+    static async fetch(pagOpts){
+        const todos = await todos.find().limit(pagOpts.limit).skip(pagOpts.offset).exec()
+        return todos;
+    }
+
     static async update(todoBody){
 
       const {updates,id,owner,body} = todoBody;

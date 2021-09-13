@@ -13,7 +13,11 @@ class TodoController {
     });
 
     static findTodos = catchAsync(async (req,res) =>{
-        const todo = await TodoService.findTodos(res);
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const todoDTO = await GetTodosDTO(page,limit)
+        const todo = await TodoService.findTodos(todoDTO);
         res.status(httpStatus.OK).send(todo)
     });
 
