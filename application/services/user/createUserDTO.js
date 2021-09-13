@@ -9,22 +9,6 @@ class CreateUserDTO {
       this.age = age;
   }
 
-  getUserName(){
-    return this.name;
-  }
-
-  getUserEmail(){
-    return this.email;
-  }
-
-  getUserPassword(){
-    return this.password;
-  }
-
-  getUserAge(){
-    return this.age;
-  }
-
   getUser(){
     const {name, email, password, age} = this
     return User.createFromObject({name, email, password, age});

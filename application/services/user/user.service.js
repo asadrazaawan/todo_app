@@ -17,9 +17,9 @@ class UserService{
         return me;
     }
 
-    static async getFindUser(id){
+    static async getFindUser(userDTO){
 
-        const userID = await UserRepository.find(id.getUserID());
+        const userID = await UserRepository.find(userDTO.getUserID());
         if(!userID){
             throw new ApiError(httpStatus.NOT_FOUND,"No User Found against this ID")
         }
@@ -35,12 +35,6 @@ class UserService{
         if(!isValid)
             throw new ApiError(httpStatus.BAD_REQUEST, "Inputs are Invalid!!!")
 
-        console.log(updates)
-        console.log("----------")
-        console.log(user)
-        console.log("----------")
-        console.log(updateUserDTO)
-        console.log("----------")
         const userEntity = UserEntity.createFromObject(updateUserDTO);
 
         console.log(userEntity);

@@ -15,6 +15,12 @@ class UserRepository{
       
     }
 
+    /**
+     * 
+     * @param {UserID} id 
+     * @returns 
+     */
+
     static async find(id){
 
         const userID= await User.findById(id)

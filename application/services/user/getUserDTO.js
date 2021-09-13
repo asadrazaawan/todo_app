@@ -1,24 +1,13 @@
+const User = require('../../../domain/Core/user/userEntity');
 
 class GetUserDTO {
     
-  constructor(userID ,name, email, password, age) {
-    this.userID = userID,
-    this.name = name,
-    this.email = email,
-    this.password = password,
-    this.age = age
+  constructor(userID) {
+    this.userID = userID
   }
 
   getUserID(){
     return this.userID;
-  }
-
-  getEmail() {
-    return this.email;
-  }
-
-  getPassword() {
-    return this.password;
   }
 
 }
