@@ -17,7 +17,7 @@ class TodoService {
         if(!todos){
             throw new ApiError(httpStatus.NOT_FOUND,"You dont have Todos against this ID!!")
         }
-        return todos
+        return todos.getPaginatedData();
     }
 
     static async findOneTodo(todoBody){

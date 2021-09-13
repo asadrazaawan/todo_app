@@ -5,9 +5,9 @@ class PaginationOptions {
     this.limit = limit;
     }
     
-    get offset(){
-    return (this.page - 1) * this.limit();
+    get skip(){
+        return (this.page - 1) * this.limit;
     }
-    }
+}
     
-    export default PaginationOptions;
+module.exports = PaginationOptions;

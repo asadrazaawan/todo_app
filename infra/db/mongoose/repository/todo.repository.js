@@ -1,6 +1,6 @@
 const todoEntity = require("../../../../domain/Core/todo/todoEntity");
 const todos = require("../models/todo");
-
+const PaginationData = require("../../../../domain/utils/paginationData")
 
 class TodoRepository{
     
@@ -23,9 +23,31 @@ class TodoRepository{
      */
     
     static async fetch(pagOpts){
-        const todos = await todos.find().limit(pagOpts.limit).skip(pagOpts.offset).exec()
-        return todos;
+        const todo = await  todos.aggregate([
+          { "$facet": {
+            "totalData": [
+              { "$match": { }},
+              { "$skip": pagOpts.skip },
+              { "$limit": pagOpts.limit }
+            ],
+            "totalCount": [
+              { "$count": "count" }
+            ]
+          }}
+        ]);
+        const rows = todo[0].totalData;
+        const count = todo[0].totalCount[0].count
+
+        const paginationData = new PaginationData(pagOpts, count)
+
+        rows.forEach((row) => {
+          paginationData.addItem(row);
+        });
+  
+        
+        return paginationData
     }
+
 
     static async update(todoBody){
 

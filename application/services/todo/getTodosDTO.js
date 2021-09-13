@@ -1,4 +1,4 @@
-import PaginationOptions from '../../Domain/Utils/PaginationOptions';
+const PaginationOptions = require("../../../domain/utils/paginationOptions");
 
 class GetTodosDTO {
       
@@ -11,4 +11,4 @@ class GetTodosDTO {
     }
   }
   
-  export default GetTodosDTO;
+  module.exports = GetTodosDTO;
