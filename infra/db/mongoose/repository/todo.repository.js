@@ -35,13 +35,14 @@ class TodoRepository{
             ]
           }}
         ]);
+        
         const rows = todo[0].totalData;
         const count = todo[0].totalCount[0].count
 
         const paginationData = new PaginationData(pagOpts, count)
 
         rows.forEach((row) => {
-          paginationData.addItem(row);
+          paginationData.addItem(todoEntity.createFromObject(row));
         });
   
         
