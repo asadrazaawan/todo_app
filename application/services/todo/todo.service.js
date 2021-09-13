@@ -23,7 +23,7 @@ class TodoService {
     static async findOneTodo(todoBody){
 
         const {_id,owner} = todoBody
-        const todoID = await TodoRepository.find({_id,owner});
+        const todoID = await TodoRepository.fetchByID({_id,owner});
         if(!todoID){
             throw new ApiError(httpStatus.NOT_FOUND,"You dont have Todo against this ID!!")
         }

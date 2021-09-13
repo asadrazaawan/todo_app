@@ -10,7 +10,7 @@ class TodoRepository{
         return todo;
     }
 
-    static async find(queryParams) {
+    static async fetchByID(queryParams) {
       const {_id,owner} = queryParams;
       const todoID = await todos.findOne({ _id , 'owner': owner})      
       return todoEntity.createFromObject(todoID);
@@ -22,7 +22,7 @@ class TodoRepository{
      * @returns 
      */
     
-    static async fetch(pagOpts){
+    static async fetchAll(pagOpts){
         const todo = await  todos.aggregate([
           { "$facet": {
             "totalData": [

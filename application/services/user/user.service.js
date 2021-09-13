@@ -19,7 +19,7 @@ class UserService{
 
     static async getFindUser(userDTO){
 
-        const userID = await UserRepository.find(userDTO.getUserID());
+        const userID = await UserRepository.fetchByID(userDTO.getUserID());
         if(!userID){
             throw new ApiError(httpStatus.NOT_FOUND,"No User Found against this ID")
         }

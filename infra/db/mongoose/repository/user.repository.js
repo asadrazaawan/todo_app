@@ -21,7 +21,7 @@ class UserRepository{
      * @returns 
      */
 
-    static async find(id){
+    static async fetchByID(id){
 
         const userID= await User.findById(id)
         return userEntity.createFromObject(userID);
