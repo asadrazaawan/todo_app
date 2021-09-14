@@ -12,7 +12,7 @@ class TodoRepository{
 
     static async fetchByID(queryParams) {
       const {_id,owner} = queryParams;
-      const todoID = await todos.findOne({ _id , 'owner': owner})      
+      const todoID = await todos.findOne({ _id , 'owner': owner});      
       return todoEntity.createFromObject(todoID);
     }
 
@@ -37,16 +37,16 @@ class TodoRepository{
         ]);
         
         const rows = todo[0].totalData;
-        const count = todo[0].totalCount[0].count
+        const count = todo[0].totalCount[0].count;
 
-        const paginationData = new PaginationData(pagOpts, count)
+        const paginationData = new PaginationData(pagOpts, count);
 
         rows.forEach((row) => {
           paginationData.addItem(todoEntity.createFromObject(row));
         });
   
         
-        return paginationData
+        return paginationData;
     }
 
 

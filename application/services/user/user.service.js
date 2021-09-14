@@ -6,13 +6,14 @@ const UserEntity = require("../../../domain/Core/user/userEntity")
 
 class UserService{
     
-    static async createUser(updateUserDTO){
+    static async createUser(createUserDTO){
 
-        if (await User.isEmailTaken(updateUserDTO.email)) {
+        if (await User.isEmailTaken(createUserDTO.email)) {
             throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
         }
-
-        const me = await UserRepository.add(updateUserDTO);
+        
+        const userInput = createUserDTO.getUser();
+        const me = await UserRepository.add(userInput);
         
         return me;
     }
@@ -26,20 +27,18 @@ class UserService{
         return userID;
     }
 
-    static async updateUser(updateUserDTO,user){
+    static async updateUser(createUserDTO,user){
         
-        const updates = Object.keys(updateUserDTO);
+        const updates = Object.keys(createUserDTO);
         const propertiesUsers = ['name','email','password','age']
         const isValid = updates.every( update => propertiesUsers.includes(update))
 
         if(!isValid)
             throw new ApiError(httpStatus.BAD_REQUEST, "Inputs are Invalid!!!")
 
-        const userEntity = UserEntity.createFromObject(updateUserDTO);
+        const userEntity = UserEntity.createFromObject(createUserDTO);
 
-        console.log(userEntity);
-
-        await UserRepository.update({updates,user,updateUserDTO})
+        await UserRepository.update({updates,user,createUserDTO});
         
         const response = {
             message: "User Updated Successfully!!!"
@@ -56,6 +55,7 @@ class UserService{
         const response = {
             message: "User Deleted Successfully!!!"
         }
+        
         return response;
     }
 

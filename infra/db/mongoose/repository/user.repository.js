@@ -6,13 +6,11 @@ const generateAuthToken = require("../../../utils/jwt")
 
 class UserRepository{
     
-    static async add(userBody) {
+    static async add(userEntity) {
 
-      const me = new User(userBody)
+      const me = new User(userEntity)
       await me.save()
-      const token = await generateAuthToken(me);  
-      return {me,token};
-      
+      return me;
     }
 
     /**

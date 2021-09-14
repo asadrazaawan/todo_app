@@ -11,7 +11,7 @@ class Todo {
 
     static createFromObject(todoObj){
         return new Todo(
-            todoObj._id,
+            todoObj.todoID,
             todoObj.name,
             todoObj.discription,
             todoObj.owner,

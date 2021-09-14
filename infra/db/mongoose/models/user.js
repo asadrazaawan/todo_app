@@ -2,8 +2,14 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const todos = require('./todo')
+const uuid = require('uuid');
+
 
 const userSchema = mongoose.Schema({
+  userID: { 
+    type: String, 
+    default: uuid.v4
+  },
   name:{
     type: String
   },

@@ -11,7 +11,7 @@ class User {
 
     static createFromObject(userObj){
         return new User(
-            userObj._id,
+            userObj.userID,
             userObj.name,
             userObj.email,
             userObj.age, 

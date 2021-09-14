@@ -1,7 +1,12 @@
 const mongoose = require('mongoose')
+const uuid = require('uuid');
 
 
 const todoListSchema = new mongoose.Schema({
+  todoID: { 
+    type: String, 
+    default: uuid.v4
+  },
   name:{
     type: String,
     required: true,
