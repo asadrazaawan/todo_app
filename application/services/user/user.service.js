@@ -13,22 +13,27 @@ class UserService{
         }
         
         const userInput = createUserDTO.getUser();
-        const me = await UserRepository.add(userInput);
+        const createUser = await UserRepository.add(userInput);
+
+        if(!createUser){
+            throw new ApiError(httpStatus.BAD_REQUEST,"Employee Creation Failed!")
+        }
         
-        return me;
+        return {message: "User created Successfully!"};
     }
 
-    static async getFindUser(userDTO){
+    static async getFindUser(findUserDTO){
 
-        const userID = await UserRepository.fetchByID(userDTO.getUserID());
+        const userID = await UserRepository.fetchByID(findUserDTO.getUserID());
         if(!userID){
             throw new ApiError(httpStatus.NOT_FOUND,"No User Found against this ID")
         }
-        return userID;
+        return userID
     }
 
-    static async updateUser(createUserDTO,user){
+    static async updateUser(createUserDTO){
         
+
         const updates = Object.keys(createUserDTO);
         const propertiesUsers = ['name','email','password','age']
         const isValid = updates.every( update => propertiesUsers.includes(update))
@@ -38,7 +43,10 @@ class UserService{
 
         const userEntity = UserEntity.createFromObject(createUserDTO);
 
-        await UserRepository.update({updates,user,createUserDTO});
+        console.log(userEntity)
+
+        console.log("=---=")
+        await UserRepository.update(userEntity);
         
         const response = {
             message: "User Updated Successfully!!!"
@@ -48,9 +56,9 @@ class UserService{
 
     }
 
-    static async deleteUser(delUser){
+    static async deleteUser(deleteUserDTO){
 
-        await UserRepository.remove(delUser.getUserID());
+        await UserRepository.remove(deleteUserDTO.getUserID());
 
         const response = {
             message: "User Deleted Successfully!!!"

@@ -29,7 +29,7 @@ class UserController{
     static updateUser = catchAsync(async (req,res) => {
         const {name, email, password, age} = req.body;
         const upUserDTO = await UpdateUserDTO.create({name, email, password, age})
-        const userUpd = await UserService.updateUser(upUserDTO,req.user);
+        const userUpd = await UserService.updateUser(upUserDTO);
 
         res.status(httpStatus.OK).send(userUpd)
     });

@@ -4,16 +4,16 @@ const PaginationData = require("../../../../domain/utils/paginationData")
 
 class TodoRepository{
     
-    static async add(todoBody) {
-        const todo = new todos(todoBody);
+    static async add(todoEntity) {
+        const todo = new todos(todoEntity);
         todo.save();
         return todo;
     }
 
-    static async fetchByID(queryParams) {
-      const {_id,owner} = queryParams;
-      const todoID = await todos.findOne({ _id , 'owner': owner});      
-      return todoEntity.createFromObject(todoID);
+    static async fetchByID(todoID) {
+      const {_id,owner} = todoID;
+      const todo = await todos.findOne({ _id , 'owner': owner});      
+      return todoEntity.createFromObject(todo);
     }
 
     /**
@@ -50,17 +50,17 @@ class TodoRepository{
     }
 
 
-    static async update(todoBody){
+    static async update(todoEntity){
 
-      const {updates,id,owner,body} = todoBody;
+      const {updates,id,owner,body} = todoEntity;
       const todoUp = await todos.findOne({_id:id, owner})  
       updates.forEach( update => todoUp[update] = body[update] )
       const updateTodo = await todoUp.save();
       return updateTodo;
     }
     
-    static async remove(queryParams) {
-      const {_id,owner} = queryParams;
+    static async remove(todoID) {
+      const {_id,owner} = todoID;
       const delTodo = await todos.findOneAndDelete({ _id, owner })
       return delTodo;
     } 

@@ -1,34 +1,28 @@
 
 const userEntity = require("../../../../domain/Core/user/userEntity")
 const User = require("../models/user");
-const generateAuthToken = require("../../../utils/jwt")
-
 
 class UserRepository{
     
     static async add(userEntity) {
 
       const me = new User(userEntity)
-      await me.save()
-      return me;
-    }
-
-    /**
-     * 
-     * @param {UserID} id 
-     * @returns 
-     */
-
-    static async fetchByID(id){
-
-        const userID= await User.findById(id)
-        return userEntity.createFromObject(userID);
-
-    }
-
-    static async update(userBody){
       
-      const {updates,user,body} = userBody;
+      await me.save()
+
+      return true;
+    }
+
+    static async fetchByID(userID){
+
+        const user = await User.findById(userID)
+        return userEntity.createFromObject(user);
+    }
+
+    static async update(userEntity){
+      
+      console.log(userEntity)
+      const {updates,user,body} = userEntity;
 
       updates.forEach((update)=>{
         user[update] = body[update]
@@ -37,11 +31,9 @@ class UserRepository{
       await user.save()
     }
     
-    static async remove(user) {
-      await user.remove();
+    static async remove(userID) {
+      await userID.remove();
     } 
-
-      
 }
 
 module.exports = UserRepository
