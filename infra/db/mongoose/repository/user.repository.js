@@ -7,7 +7,7 @@ class UserRepository{
     static async add(userEntity) {
 
       const me = new User(userEntity)
-      
+      console.log(me)
       await me.save()
 
       return true;
@@ -15,20 +15,20 @@ class UserRepository{
 
     static async fetchByID(userID){
 
-        const user = await User.findById(userID)
-        return userEntity.createFromObject(user);
+      const user = await User.findById(userID)
+      return userEntity.createFromObject(user);
     }
 
     static async update(userEntity){
-      
-      console.log(userEntity)
-      const {updates,user,body} = userEntity;
-
-      updates.forEach((update)=>{
-        user[update] = body[update]
-      })
-      
-      await user.save()
+      const userID = userEntity.userID;
+      if (userID.match(/^[0-9a-fA-F]{24}$/)) {
+        const updateUser = await User.findOneAndUpdate(userEntity.userID,userEntity,{new: true})  
+        console.log(updateUser)  
+        await updateUser.save();
+      }
+      else{
+        return {message: "Invalid ID!"}
+      }
     }
     
     static async remove(userID) {

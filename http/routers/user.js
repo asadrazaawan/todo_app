@@ -16,7 +16,7 @@ router.post('/users/logout',auth,authController.userLogOut)
 
 router.get('/users/:id',userController.getFindUser)
 
-router.patch('/users/me',auth,userController.updateUser)
+router.patch('/users/:userID',auth,userController.updateUser)
 
 router.delete('/users/me',auth,userController.deleteUser)
 

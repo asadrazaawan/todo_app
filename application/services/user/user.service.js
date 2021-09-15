@@ -11,10 +11,8 @@ class UserService{
         if (await User.isEmailTaken(createUserDTO.email)) {
             throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
         }
-        
         const userInput = createUserDTO.getUser();
         const createUser = await UserRepository.add(userInput);
-
         if(!createUser){
             throw new ApiError(httpStatus.BAD_REQUEST,"Employee Creation Failed!")
         }
@@ -33,19 +31,22 @@ class UserService{
 
     static async updateUser(createUserDTO){
         
+        const user = await UserRepository.fetchByID(createUserDTO.userID);
+        const createdAt = user.createdAt;
+        const updatedAt = user.updatedAt;
+        if (!user) {
+            throw new ApiError(httpStatus.BAD_REQUEST, "User doesnt exist!!!")
+        }
 
         const updates = Object.keys(createUserDTO);
-        const propertiesUsers = ['name','email','password','age']
+        const propertiesUsers = ['userID','name','email','password','age']
         const isValid = updates.every( update => propertiesUsers.includes(update))
 
         if(!isValid)
             throw new ApiError(httpStatus.BAD_REQUEST, "Inputs are Invalid!!!")
 
-        const userEntity = UserEntity.createFromObject(createUserDTO);
+        const userEntity = UserEntity.createFromObject({...createUserDTO,createdAt,updatedAt});
 
-        console.log(userEntity)
-
-        console.log("=---=")
         await UserRepository.update(userEntity);
         
         const response = {

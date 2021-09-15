@@ -1,15 +1,16 @@
 
 class UpdateUserDTO {
     
-    constructor(name, email, password, age) {
+    constructor(userID, name, email, password, age) {
+        this.userID = userID,
         this.name = name,
         this.email = email,
         this.password = password,
         this.age = age
     }
 
-    static create({name, email, password, age}) {
-        return new UpdateUserDTO(name, email, password, age)
+    static create({userID,name, email, password, age}) {
+        return new UpdateUserDTO(userID, name, email, password, age)
     }
 
 }

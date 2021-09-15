@@ -19,7 +19,7 @@ class UserController{
 
     static getFindUser = catchAsync(async (req,res) => {
 
-        const userID = req.params.id
+        const userID = req.params.id;
         const userFindDTO = await new GetUserDTO(userID);
         const user = await UserService.getFindUser(userFindDTO)
         res.status(httpStatus.OK).send(user)
@@ -27,8 +27,9 @@ class UserController{
     });
 
     static updateUser = catchAsync(async (req,res) => {
+        const userID = req.params.userID;
         const {name, email, password, age} = req.body;
-        const upUserDTO = await UpdateUserDTO.create({name, email, password, age})
+        const upUserDTO = await UpdateUserDTO.create({userID,name, email, password, age})
         const userUpd = await UserService.updateUser(upUserDTO);
 
         res.status(httpStatus.OK).send(userUpd)
